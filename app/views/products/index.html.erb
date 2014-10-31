@@ -1,0 +1,60 @@
+<h1>Listing products</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Stock quantity</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.title %></td>
+        <td><%= product.description %></td>
+        <td><%= product.price %></td>
+        <td><%= product.stock_quantity %></td>
+        <td><%= link_to 'Show', product %></td>
+        <td><%= link_to 'Edit', edit_product_path(product) %></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br/>
+
+<%= link_to 'New Product', new_product_path %>
+<br/>
+
+<!--get the total of the prices in the table -->
+<% total = 0 %>
+<% Product.all.each{ |product| total += product.price} %>
+<%= total %>
+<br/>
+
+<!--get the max price-->
+<% prices = Array.new %>
+<% Product.all.each{ |product| prices << product.price} %>
+<%= prices.max %>
+<br/>
+
+<!--count unique items-->
+<% total_unique = 0 %>
+<% unique_items = Product.select(:title).distinct %>
+<% unique_items.each { |product| total_unique += 1}%>
+<%= total_unique %>
+<br/>
+
+<!--total quantites-->
+<% total_stock = 0 %>
+<% Product.all.each{ |product| total_stock += product.stock_quantity} %>
+<%= total_stock %>
+
+<br/>
+<% 100.times { %>
+  <p>Chunky Bacon</p>
+<% } %>
